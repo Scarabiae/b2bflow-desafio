@@ -50,7 +50,6 @@ def send_whatsapp_message(contact_name: str, contact_phone: str):
     """
     message = f"Olá {contact_name}, tudo bem com você?"
     
-    # O endpoint da Z-API para envio de texto
     api_url = f"https://api.z-api.io/instances/{ZAPI_INSTANCE_ID}/token/{ZAPI_TOKEN}/send-text"
     
     payload = {
@@ -59,14 +58,13 @@ def send_whatsapp_message(contact_name: str, contact_phone: str):
     }
     
     headers = {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Client-Token": ZAPI_TOKEN
     }
 
     try:
         logging.info(f"Enviando mensagem para {contact_name} ({contact_phone})...")
         response = requests.post(api_url, json=payload, headers=headers)
-        
-        # Verifica se a requisição foi bem-sucedida
         response.raise_for_status()
         
         logging.info(f"Mensagem enviada com sucesso para {contact_name}. Status: {response.status_code}")
